@@ -1,0 +1,15 @@
+Q1 : select Fname from EMPLOYEE where Salary > ( select AVG(Salary) from EMPLOYEE );
+
+Q2 : select Fname from EMPLOYEE where Ssn in ( select Ssn from EMPLOYEE where Ssn in (  select  Super_ssn from EMPLOYEE ) ) and Ssn not in (select  Essn from DEPENDENT ) ;
+
+
+
+Q 5 : select Pname, COUNT( Essn) from WORKS_ON JOIN PROJECT ON PROJECT.Pnumber = WORKS_ON.Pno GROUP BY Pno ;
+
+Q 7 :  select Fname from  EMPLOYEE where Ssn in ( select DISTINCT Essn from WORKS_ON where Pno <> 1 and Pno <> 2 );
+
+Q 8  : select avg(CGPA) from STUDENT where CGPA in (select CGPA from STUDENT where RollNumber in ( select  RollNo from TAKES where CNO = ( select CNO from COURSE where CName = 'information technology' ) )) ;
+
+Q 9 : select Name from FACULTY where FID not in ( select Head from RESEARCH_CENTER);	
+
+Q 10 : select CName from COURSE where CNO not in ( select CNO from TAKES where GRADE = 'A' ) ;
