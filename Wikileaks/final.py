@@ -17,7 +17,7 @@ cursor = connection.cursor()
 
 while 1:
 
-
+  print("\n\n")
   print("enter according to query")
   print("1. new employee")
   print("2. fire employee")
@@ -25,7 +25,10 @@ while 1:
   print("4. Show Records")
   print("5 : Exit loop")
   print("6. check whether a vehicle is available")
+  print("7. check the kind of food that is available")
+  print("8. Cargo weight for the flight")
 
+  print("\n\n")
 
   number = input("Please enter the number according to what operation do you need : ")
 #  print(number)
@@ -147,13 +150,40 @@ while 1:
     except Exception as e:
       connection.rollback()
       print("Exception occurred: ",e)
+  elif number == "7":
+    flight_number = int( input("Please enter flight number : "))
+    query1 = "select food_type_name, price from food where food_type = ( select food_type from flight_food where flight_code = '%d'  )" %(flight_number)
+
+    try:
+      cursor.execute(query1) 
+      result = cursor.fetchone()
+      food_type_name = str(result[0])
+      price = str (result[1])
+
+      print("For the flight number " + str(flight_number) + " food_type_name is " + str(food_type_name) + " and price is " + str(price))
+
+    except Exception as e:
+      connection.rollback()
+      print("Exception occurred ", e)
+
+  elif number == "8":
+    flight_number = int( input("Please enter flight number : "))
+    query1 = "select cargo_weight from flight_cargo where flight_code = '%d'  " %(flight_number)
+
+    try:
+      cursor.execute(query1) 
+      result = cursor.fetchone()
+      ans = str( result[0] )
+
+      print("For the flight number " + str(flight_number) + " cargo_weight is " + str(ans) + " kg" )
+
+    except Exception as e:
+      connection.rollback()
+      print("Exception occurred ", e)
+
   else:
       print("Please enter a valid number and read the instructions carefully!")
 
 # here I believe that we have executed all queries
 
 connection.close()
-
-  
-
-

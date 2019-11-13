@@ -19,9 +19,9 @@ create table employee_phone_numbers( employee_id varchar(20), phone_number int);
 create table airline_flights( airport_code int, airline_id int, flight_code int );
 create table flights( flight_code int,  destination int, source int, status char(10), duration int, flight_type int);
 create table flight_types( flight_type_id int, flight_type_name char(10) );
-create table food( food_type int, price int);
-create table flight_cargo( flight_code int,  cargo_type char(10), weight int);
-create table flight_food( flight_code int, food_type int);
+create table food( food_type int, price int , food_type_name char(20));
+create table flight_cargo( flight_code int,  cargo_type char(10), cargo_weight int);
+create table flight_food( flight_code int, food_type int );
 create table cargo( cargo_type_id int, cargo_type_name char(20));
 create table flight_passengers( flight_code int ,  passenger_id int);
 create table passengers( passenger_id int unique, fname char(15), mname char(15), lname char(15), dob date , address Varchar(100), sex char (5), date_of_booking date);
@@ -105,8 +105,8 @@ INSERT INTO flights values (7890,0110,0100,'on_time',3,2);
 INSERT INTO flights values (7892,0100,0110,'on_time',2,2);
 INSERT INTO flights values (7894,0102,0100,'on_time',4,1);
 -- food-- 
-INSERT INTO food values (1,200);
-INSERT INTO food values (2,300);
+INSERT INTO food values (1,200 , "veg");
+INSERT INTO food values (2,300 , "non veg");
 -- passenger_phone_numbers-- 
 INSERT INTO passenger_phone_numbers values (12345,997098799);
 INSERT INTO passenger_phone_numbers values (12344,987098799);
@@ -133,6 +133,7 @@ INSERT INTO vehicles values (0001,TRUE,4,'LMV');
 INSERT INTO vehicles values (1002,TRUE,48,'BUS');
 INSERT INTO vehicles values (1003,TRUE,45,'BUS');
 INSERT INTO vehicles values (1004,FALSE,45,'BUS');
+
 
 
 
