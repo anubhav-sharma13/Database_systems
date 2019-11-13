@@ -6,13 +6,13 @@ use project;
 
 
 
-create table airport_vehicles ( airport_code int , vehicle_number int);
+create table airport_vehicles ( airport_code int unique , vehicle_number int);
 create table cities( Ccode int, country Varchar(15) , state Varchar(15) , city_name Varchar(15) , airport_code int );
-create table vehicles (  vehicle_number int , availability boolean ,  capacity int,  type Varchar(15) );
+create table vehicles (  vehicle_number  int , availability boolean ,  capacity int,  type Varchar(15) );
 create table airport_airline ( airport_code int , airline_id int);
 create table airlines ( airline_id int , airline_name Varchar(15) );
 create table airport_employee ( airport_code int , employee_id varchar(20));
-create table employee(  fname char (15),  mname char (15),  lname char(15), job_type int ,  dob date , address Varchar(100),  employee_id varchar(20), emp_type int , sex char(5) );
+create table employee(  fname char (15),  mname char (15),  lname char(15), job_type int ,  dob date , address Varchar(100),  employee_id varchar(20) unique, emp_type int , sex char(5) );
 create table employee_types( employee_type_id int ,  employee_type_name char(20) );
 create table employee_job_type( employee_job_type_id int, employee_job_type_name char(15) );
 create table employee_phone_numbers( employee_id varchar(20), phone_number int);
@@ -24,7 +24,7 @@ create table flight_cargo( flight_code int,  cargo_type char(10), weight int);
 create table flight_food( flight_code int, food_type int);
 create table cargo( cargo_type_id int, cargo_type_name char(20));
 create table flight_passengers( flight_code int ,  passenger_id int);
-create table passengers( passenger_id int, fname char(15), mname char(15), lname char(15), dob date , address Varchar(100), sex char (5), date_of_booking date);
+create table passengers( passenger_id int unique, fname char(15), mname char(15), lname char(15), dob date , address Varchar(100), sex char (5), date_of_booking date);
 create table passenger_phone_numbers( passenger_id int, phone_number int);
 --  create table passenger_tickets( passenger_id int, ticket_id int);
 create table tickets( passenger_id int, ticket_id int, seat_number int, class int, source int, destination int, date_of_travel date);
