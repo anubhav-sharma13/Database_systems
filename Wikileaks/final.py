@@ -24,10 +24,11 @@ while 1:
   print("3. Flight Cancel")
   print("4. Show Records")
   print("5 : Exit loop")
+  print("6. check whether a vehicle is available")
 
 
   number = input("Please enter the number according to what operation do you need : ")
-  print(number)
+#  print(number)
 
   if number == "1" :
     print("So you wanna hire an employee. Please enter the following details:")
@@ -124,8 +125,30 @@ while 1:
 
 
   elif number == "5":
-    print("See ya!")
+    print("See ya! next time")
     break
+  elif number == "6":
+    # we will need the 
+    veh_id = int(input("Please enter the vehicle number: "))
+    query1 = "select availability from vehicles where vehicle_number = '%d' " %(veh_id)
+    try:
+      cursor.execute(query1)
+      result = cursor.fetchone()
+      ans = int (str(result)[1:-2] )
+      if ans == 1 :
+        print("oh , it's available, following is it's detail")
+        query2 = "select * from vehicles where vehicle_number = '%d' " %(veh_id)
+        cursor.execute(query2)
+        result = str(cursor.fetchone())
+        print(result)
+      else:
+        print("Well it seems your vehicle is not available atm -\/0_0\/- ")
+      connection.commit()
+    except Exception as e:
+      connection.rollback()
+      print("Exception occurred: ",e)
+  else:
+      print("Please enter a valid number and read the instructions carefully!")
 
 # here I believe that we have executed all queries
 

@@ -132,7 +132,6 @@ INSERT INTO tickets values (12346,04,03,2,0102,0100,'2019-11-12');
 INSERT INTO vehicles values (0001,TRUE,4,'LMV');
 INSERT INTO vehicles values (1002,TRUE,48,'BUS');
 INSERT INTO vehicles values (1003,TRUE,45,'BUS');
-INSERT INTO vehicles values (1004,FALSE,45,'BUS');
 
 
 
