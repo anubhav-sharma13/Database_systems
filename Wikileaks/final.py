@@ -4,14 +4,14 @@ import pymysql
 
 
 
-# host= input ("please enter host name ")
-# name = input("Please enter user name ")
-# password = input("Please enter user password ")
-# database = input("Please enter user database name ")
+host= input ("please enter host name ")
+name = input("Please enter user name ")
+password = input("Please enter user password ")
+database = input("Please enter user database name ")
 
 
 
-connection = pymysql.connect("localhost" , "root" , "test" , "project")
+connection = pymysql.connect(host , name , password , database)
 
 cursor = connection.cursor()
 
@@ -83,7 +83,9 @@ while 1:
     query3 = "delete from employee_phone_numbers where employee_id = '%s' "  %(employee_id)
 
     try:
-        cursor.execute(query1)
+        a = cursor.execute(query1)
+        if a == 0:
+          print("Sorry we couldn't find our guy :( please file in an appropriate EmpId")
         cursor.execute(query2)
         cursor.execute(query3)
         connection.commit()
@@ -135,7 +137,9 @@ while 1:
     veh_id = int(input("Please enter the vehicle number: "))
     query1 = "select availability from vehicles where vehicle_number = '%d' " %(veh_id)
     try:
-      cursor.execute(query1)
+      a = cursor.execute(query1)
+      if a == 0:
+        print("NO vehicles found")
       result = cursor.fetchone()
       ans = int (str(result)[1:-2] )
       if ans == 1 :
@@ -145,7 +149,7 @@ while 1:
         result = str(cursor.fetchone())
         print(result)
       else:
-        print("Well it seems your vehicle is not available atm -\/0_0\/- ")
+        print("Well it seems your vehicle is not available atm ")
       connection.commit()
     except Exception as e:
       connection.rollback()
@@ -155,7 +159,9 @@ while 1:
     query1 = "select food_type_name, price from food where food_type = ( select food_type from flight_food where flight_code = '%d'  )" %(flight_number)
 
     try:
-      cursor.execute(query1) 
+      a = cursor.execute(query1) 
+      if a  == 0:
+        print("Sorry, flight not found. Please try again with apt data")
       result = cursor.fetchone()
       food_type_name = str(result[0])
       price = str (result[1])
@@ -171,7 +177,9 @@ while 1:
     query1 = "select cargo_weight from flight_cargo where flight_code = '%d'  " %(flight_number)
 
     try:
-      cursor.execute(query1) 
+      a = cursor.execute(query1) 
+      if a == 0:
+        print("Sorry, flight not found. Please try again with apt data")
       result = cursor.fetchone()
       ans = str( result[0] )
 

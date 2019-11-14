@@ -1,0 +1,194 @@
+This is for the lab exam. This will have the queries that will be used for the main thing:
+
+1 A : 
+
+Query:
+SELECT MAX(SALARY), MIN(SALARY) , AVG(SALARY) FROM EMPLOYEE; 
+
+Reason:
+because they are the respective funcitons for that
+
+Result:
++-------------+-------------+--------------+
+| MAX(SALARY) | MIN(SALARY) | AVG(SALARY)  |
++-------------+-------------+--------------+
+|    55000.00 |    25000.00 | 35125.000000 |
++-------------+-------------+--------------+
+
+
+1 B :
+
+Query:
+SELECT SUM(Hours) from WORKS_ON where Essn = 987654321 ;
+
+Reason:
+Again , because the sum command gives exactly that
+
+Result:
++------------+
+| SUM(Hours) |
++------------+
+|       35.0 |
++------------+
+
+
+1 C :
+
+Query:
+select Fname, Lname from EMPLOYEE where Dno = ( select Dnumber from DEPARTMENT where Dname = "Administration" ); 
+
+Reason:
+this is so because admn has it's name in Department table and employee details are in employee table
+
+Result:
+----------+---------+
+| Fname    | Lname   |
++----------+---------+
+| Jennifer | Wallace |
+| Ahmad    | Jabbar  |
+| Alicia   | Zelaya  |
++----------+---------+
+
+1 D :
+
+Query:
+select Fname , Lname from EMPLOYEE ORDER BY Bdate DESC;  
+
+Reason:
+this is so because bdate in desc would give youngest to oldest names;
+
+Result:
++----------+---------+
+| Fname    | Lname   |
++----------+---------+
+| Joyce    | English |
+| Ahmad    | Jabbar  |
+| Alicia   | Zelaya  |
+| John     | Smith   |
+| Ramesh   | Narayan |
+| Franklin | Wong    |
+| Jennifer | Wallace |
+| James    | Borg    |
++----------+---------+
+
+
+1 E :
+
+Query:
+select Fname , Lname  from EMPLOYEE where Ssn not in ( select distinct Essn from DEPENDENT ); 
+
+Reason:
+This is so because the inner query gives those SSN's who have depenents. then the outer ones take note of all the Ssns that are not here and list their names;
+
+Result:
++--------+---------+
+| Fname  | Lname   |
++--------+---------+
+| Joyce  | English |
+| Ramesh | Narayan |
+| James  | Borg    |
+| Ahmad  | Jabbar  |
+| Alicia | Zelaya  |
++--------+---------+
+
+////////////////////////////////////////////////////////////////////
+
+
+
+MEDIUM : 
+
+Query :
+
+select Fname , sum(Hours) from EMPLOYEE left join WORKS_ON on WORKS_ON.Essn = EMPLOYEE.Ssn where Pno in (select Pnumber from PROJECT where Pname like "product%" ) GRROUP BY Essn;
+
+Reason:
+
+the inner most query gives the project numbers of the relevant projects;
+then  we try to use left join on the two tables WORKS_ON and EMPLOYEE to give us the name and the hours put by them in their respecitive projects;
+
+Result:
+
++----------+------------+
+| Fname    | sum(Hours) |
++----------+------------+
+| John     |       40.0 |
+| Franklin |       20.0 |
+| Joyce    |       40.0 |
+| Ramesh   |       40.0 |
++----------+------------+
+
+
+///////////////////////////////////////////////////////////////////////////
+
+HARD :
+
+We are looking to delete the project "Newbenefits" from the database.
+
+First we will delete it's entry from the projects table;
+
+Then we delete all such entries from the works_on table where employees are working on this project;
+
+=>> The queries are as follows :
+
+1. remove relevant rows from WORKS_ON table;
+
+Query:
+delete from WORKS_ON where Pno = ( select Pnumber from PROJECT where Pname = "Newbenefits" );
+
+
+Reason:
+this is cuz it removes the relevant new project files;
+
+
+table after the query : 
+
+select * from WORKS_ON;
+
++-----------+-----+-------+
+| Essn      | Pno | Hours |
++-----------+-----+-------+
+| 123456789 |   1 |  32.5 |
+| 123456789 |   2 |   7.5 |
+| 333445555 |   2 |  10.0 |
+| 333445555 |   3 |  10.0 |
+| 333445555 |  10 |  10.0 |
+| 333445555 |  20 |  10.0 |
+| 453453453 |   1 |  20.0 |
+| 453453453 |   2 |  20.0 |
+| 666884444 |   3 |  40.0 |
+| 888665555 |  20 |  NULL |
+| 987654321 |  20 |  15.0 |
+| 987987987 |  10 |  35.0 |
+| 999887777 |  10 |  10.0 |
++-----------+-----+-------+
+
+we can notice how all references for project number 30 is gone
+
+2. Remove relevant row from PROJECT table;
+
+Query:
+delete from PROJECT where Pname = "Newbenefits" ; 
+
+
+Reason:
+this is so that it removes the name of the project from the project table;
+
+Table left after the operation :
+
+SELECT * from PROJECT;
+
++-----------------+---------+-----------+------+
+| Pname           | Pnumber | Plocation | Dnum |
++-----------------+---------+-----------+------+
+| ProductX        |       1 | Bellaire  |    5 |
+| ProductY        |       2 | Sugarland |    5 |
+| ProductZ        |       3 | Houston   |    5 |
+| Computerization |      10 | Stafford  |    4 |
+| Reorganization  |      20 | Houston   |    1 |
++-----------------+---------+-----------+------+
+
+
+note : they have to be done in the same order as other wise we won't be able to reference the Pnumber for the newbenefits project
+
+
+
