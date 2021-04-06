@@ -3,4 +3,4 @@ A project being implemented as a course subject's requirement.
 
 
 ## Project Partners
-Sankar Tibrewal, Nishant Sachdeva
+Anubhav Sharma , Sankar Tibrewal, Nishant Sachdeva
